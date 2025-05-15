@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HeartMatch - Найди свою вторую половинку</title>
+  <style>
+    :root {
+      --primary: #ff4d6d;
+      --secondary: #ff8fa3;
+      --dark: #2b2d42;
+      --light: #fff0f3;
+      --accent: #c9184a;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo i {
+      margin-right: 0.5rem;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+    
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+    }
+    
+    nav ul li a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    .auth-buttons .btn {
+      margin-left: 1rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      color: white;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    
+    /* How it works */
+    .how-it-works {
+      padding: 4rem 0;
+      background: white;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 2rem;
+    }
+    
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .step {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 10px;
+      background: var(--light);
+      transition: transform 0.3s;
+    }
+    
+    .step:hover {
+      transform: translateY(-10px);
+    }
+    
+    .step i {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    
+    .step h3 {
+      margin-bottom: 1rem;
+    }
+    
+    /* Profiles */
+    .profiles {
+      padding: 4rem 0;
+      background: var(--light);
+    }
+    
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    
+    .profile-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    
+    .profile-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    
+    .profile-image {
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    
+    .profile-card:hover .profile-image img {
+      transform: scale(1.05);
+    }
+    
+    .profile-info {
+      padding: 1.5rem;
+    }
+    
+    .profile-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .profile-age {
+      color: var(--primary);
+      font-weight: 500;
+    }
+    
+    .profile-location {
+      color: #666;
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .profile-location i {
+      margin-right: 0.5rem;
+    }
+    
+    .profile-interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .interest {
+      background: var(--light);
+      color: var(--accent);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    /* Testimonials */
+    .testimonials {
+      padding: 4rem 0;
+      background: white;
+    }
+    
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .testimonial {
+      background: var(--light);
+      padding: 2rem;
+      border-radius: 10px;
+      position: relative;
+    }
+    
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 4rem;
+      color: rgba(255, 77, 109, 0.1);
+      font-family: serif;
+    }
+    
+    .testimonial-content {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .testimonial-author img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 1rem;
+    }
+    
+    /* CTA */
+    .cta {
+      padding: 4rem 0;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      text-align: center;
+    }
+    
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 3rem 0 2rem;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-column h3 {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 0.7rem;
+    }
+    
+    .footer-column ul li a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-column ul li a:hover {
+      color: white;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    
+    .social-links a:hover {
+      color: var(--secondary);
+    }
+    
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: white;
+      color: var(--primary);
+    }
+    
+    .btn-primary:hover {
+      background: var(--light);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .btn-secondary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+    }
+    
+    .modal.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      position: relative;
+      margin: 20px;
+    }
+    
+    .modal-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+    }
+    
+    .close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 2rem;
+      cursor: pointer;
+      color: var(--dark);
+    }
+    
+    .modal-interests {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+      }
+      
+      nav ul {
+        margin-top: 1rem;
+      }
+      
+      .hero {
+        height: 500px;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <a href="#" class="logo"><i class="fas fa-heart"></i> HeartMatch</a>
+      <nav>
+        <ul>
+          <li><a href="#">Главная</a></li>
+          <li><a href="#profiles">Анкеты</a></li>
+          <li><a href="#testimonials">Отзывы</a></li>
+          <li><a href="#premium">Премиум</a></li>
+        </ul>
+      </nav>
+      <div class="auth-buttons">
+        <a href="#" class="btn btn-primary">Войти</a>
+        <a href="#" class="btn btn-secondary">Регистрация</a>
+      </div>
+    </div>
+  </header>
+  
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Найди свою вторую половинку</h1>
+      <p>Более 1 миллиона пользователей уже нашли свою любовь с помощью HeartMatch</p>
+      <div style="display: flex; gap: 1rem;">
+        <a href="#" class="btn btn-primary">Начать поиск</a>
+        <a href="#" class="btn btn-secondary">Узнать больше</a>
+      </div>
+    </div>
+  </section>
+  
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">Как это работает</h2>
+      <div class="steps">
+        <div class="step">
+          <i class="far fa-user-circle"></i>
+          <h3>Создайте профиль</h3>
+          <p>Расскажите о себе, добавьте фото и укажите, кого вы ищете</p>
+        </div>
+        <div class="step">
+          <i class="fas fa-search"></i>
+          <h3>Найдите подходящего человека</h3>
+          <p>Используйте наши фильтры для поиска идеальной пары</p>
+        </div>
+        <div class="step">
+          <i class="far fa-comment-dots"></i>
+          <h3>Начните общение</h3>
+          <p>Отправляйте сообщения и симпатии понравившимся людям</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="profiles" id="profiles">
+    <div class="container">
+      <h2 class="section-title">Популярные анкеты</h2>
+      <div class="profile-grid">
+        <div class="profile-card" onclick="openModal(
+          'Виктор', 
+          45, 
+          'Казань', 
+          'https://i.postimg.cc/t4tc7bFV/2.png', 
+          ['Путешествия', 'Кино', 'Рыбалка'], 
+          'Люблю активный отдых и культурные мероприятия. Работаю в сфере дизайна. Ищу серьезные отношения.'
+        )">
+          <div class="profile-image">
+            <img src="https://i.postimg.cc/t4tc7bFV/2.png" alt="Виктор">
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">Виктор <span class="profile-age">45 года</span></h3>
+            <div class="profile-location">
+              <i class="fas fa-map-marker-alt"></i> Казань
+            </div>
+            <div class="profile-interests">
+              <span class="interest">Путешествия</span>
+              <span class="interest">Кино</span>
+			  <span class="interest">Рыбалка</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Остальные профили с обновленным вызовом openModal -->
+        <div class="profile-card" onclick="openModal(
+          'Максим', 
+          42, 
+          'Санкт-Петербург', 
+          'https://i.postimg.cc/bY7VTrTt/3.png', 
+          ['Спорт', 'Фотография', 'Музыка'], 
+          'Профессиональный фотограф, люблю активный образ жизни и творческих людей.'
+        )">
+          <div class="profile-image">
+            <img src="https://i.postimg.cc/bY7VTrTt/3.png" alt="Максим">
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">Максим <span class="profile-age">42 года</span></h3>
+            <div class="profile-location">
+              <i class="fas fa-map-marker-alt"></i> Санкт-Петербург
+            </div>
+            <div class="profile-interests">
+              <span class="interest">Спорт</span>
+              <span class="interest">Фотография</span>
+			  <span class="interest">Музыка</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Profile 3 -->
+        <div class="profile-card" onclick="openModal(
+          'Аркадий', 
+          46, 
+          'Волгоград', 
+          'https://i.postimg.cc/zXTtPNtP/11.jpg', 
+          ['Автомобили', 'Путешествия', 'Охота'], 
+          'У меня свой автопарк и заповедник. Строю второй дом.'
+        )">
+          <div class="profile-image">
+            <img src="https://i.postimg.cc/zXTtPNtP/11.jpg" alt="Аркадий">
+          </div>
+          <div class="profile-info">
+           <h3 class="profile-name">Аркадий <span class="profile-age">46 года</span></h3>
+            <div class="profile-location">
+              <i class="fas fa-map-marker-alt"></i> Волгоград
+            </div>
+            <div class="profile-interests">
+              <span class="interest">Автомобили</span>
+              <span class="interest">Путешествия</span>
+			  <span class="interest">Охота</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Profile 4 -->
+        <div class="profile-card" onclick="openModal(
+          'Андрей', 
+          43, 
+          'Москва', 
+          'https://i.postimg.cc/wTxzVtMB/portret-fermera-stoasego-v-ablonevom-sadu.jpg', 
+          ['Бизнесс', 'Автомобили', 'Авиация'], 
+          'Пилот уже 20 лет. Ищу ту, которая будет ждать меня на земле.'
+        )">
+          <div class="profile-image">
+            <img src="https://i.postimg.cc/wTxzVtMB/portret-fermera-stoasego-v-ablonevom-sadu.jpg" alt="Андрей">
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">Андрей <span class="profile-age">43 года</span></h3>
+            <div class="profile-location">
+              <i class="fas fa-map-marker-alt"></i> Москва
+            </div>
+            <div class="profile-interests">
+              <span class="interest">Бизнесс</span>
+              <span class="interest">Автомобили</span>
+              <span class="interest">Авиация</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile 5 (новый мужчина 40-45 лет) -->
+        <div class="profile-card" onclick="openModal(
+          'Захар', 
+          44, 
+          'Санкт-Петербург', 
+          'https://i.postimg.cc/G2bgCyZ8/portret-vzroslogo-muzciny-s-celkoi-i-golubymi-glazami-pod-svetom-s-razmytoi-poverhnost-u.jpg', 
+          ['Музыка', 'Фотография', 'Кино'], 
+          'Живу в центре Питера. Владею галлереей. Ищу свою Мону Лизу.'
+        )">
+          <div class="profile-image">
+            <img src="https://i.postimg.cc/G2bgCyZ8/portret-vzroslogo-muzciny-s-celkoi-i-golubymi-glazami-pod-svetom-s-razmytoi-poverhnost-u.jpg" alt="Захар">
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">Захар <span class="profile-age">44 года</span></h3>
+            <div class="profile-location">
+              <i class="fas fa-map-marker-alt"></i> Санкт-Петербург
+            </div>
+            <div class="profile-interests">
+              <span class="interest">Музыка</span>
+              <span class="interest">Фотография</span>
+              <span class="interest">Кино</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile 6 (новый мужчина 40-45 лет) -->
+        <div class="profile-card" onclick="openModal(
+          'Василий', 
+          40, 
+          'Москва', 
+          'https://i.postimg.cc/VkBjcV1g/muzcina-srednih-let-sidit-s-bokalom-vina.jpg', 
+          ['Футбол', 'Фотография', 'Еда'], 
+          'Владелец сети ресторанов! Ты не будешь стоять у плиты- я стану твоим шефом;))'
+        )">
+          <div class="profile-image">
+            <img src="https://i.postimg.cc/VkBjcV1g/muzcina-srednih-let-sidit-s-bokalom-vina.jpg" alt="Василий">
+          </div>
+          <div class="profile-info">
+            <h3 class="profile-name">Василий <span class="profile-age">40 года</span></h3>
+            <div class="profile-location">
+              <i class="fas fa-map-marker-alt"></i> Москва
+            </div>
+            <div class="profile-interests">
+              <span class="interest">Футбол</span>
+              <span class="interest">Фотография</span>
+              <span class="interest">Еда</span>
+            </div>
+          </div>
+        </div>
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="#" class="btn btn-secondary">Смотреть все анкеты</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Модальное окно -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <img id="modalImage" class="modal-image" src="" alt="Profile">
+      <h2><span id="modalName"></span>, <span id="modalAge"></span></h2>
+      <div class="modal-location"><i class="fas fa-map-marker-alt"></i> <span id="modalLocation"></span></div>
+      <p id="modalAbout" class="modal-about"></p>
+      <div id="modalInterests" class="modal-interests"></div>
+    </div>
+  </div>
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <h2 class="section-title">Истории успеха</h2>
+      <div class="testimonial-grid">
+        <!-- Testimonial 1 -->
+        <div class="testimonial">
+          <div class="testimonial-content">
+            <p>Спасибо HeartMatch за возможность встретить свою любовь! Мы познакомились здесь год назад и сейчас готовимся к свадьбе.</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Алексей">
+            <div>
+              <h4>Алексей и Ольга</h4>
+              <p>Вместе 1 год</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="testimonial">
+          <div class="testimonial-content">
+            <p>Никогда не думал, что найду свою вторую половинку через сайт знакомств. Спасибо за ваш сервис!</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Иван">
+            <div>
+              <h4>Иван и Мария</h4>
+              <p>Вместе 2 года</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="testimonial">
+          <div class="testimonial-content">
+            <p>Отличный сайт с удобным интерфейсом. Мы познакомились здесь и уже год вместе. Рекомендую всем!</p>
+          </div>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Елена">
+            <div>
+              <h4>Елена и Сергей</h4>
+              <p>Вместе 1 год</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="cta" id="premium">
+    <div class="container">
+      <h2>Готовы найти свою любовь?</h2>
+      <p>Присоединяйтесь к миллиону пользователей, которые уже нашли свою вторую половинку</p>
+      <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+        <a href="#" class="btn btn-primary">Бесплатная регистрация</a>
+        <a href="#" class="btn btn-secondary">Премиум доступ</a>
+      </div>
+    </div>
+  </section>
+  
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-column">
+        <h3>HeartMatch</h3>
+        <p>Сервис знакомств №1 в России. Помогаем людям находить любовь с 2015 года.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-vk"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Сервис</h3>
+        <ul>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Тарифы</a></li>
+          <li><a href="#">Безопасность</a></li>
+          <li><a href="#">Помощь</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Правила</h3>
+        <ul>
+          <li><a href="#">Условия использования</a></li>
+          <li><a href="#">Политика конфиденциальности</a></li>
+          <li><a href="#">Правила сайта</a></li>
+          <li><a href="#">Cookie</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Контакты</h3>
+        <ul>
+          <li><a href="mailto:info@heartmatch.ru">info@heartmatch.ru</a></li>
+          <li><a href="tel:+78001234567">8 (800) 123-45-67</a></li>
+          <li>Москва, ул. Любовная, 15</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      &copy; 2023 HeartMatch. Все права защищены.
+    </div>
+  </footer>
+
+    <script>
+    function openModal(name, age, location, image, interests, about) {
+      document.getElementById('modalName').textContent = name;
+      document.getElementById('modalAge').textContent = age
+      document.getElementById('modalLocation').textContent = location;
+      document.getElementById('modalImage').src = image;
+      document.getElementById('modalAbout').textContent = about;
+      
+      const interestsEl = document.getElementById('modalInterests');
+      interestsEl.innerHTML = '';
+      interests.forEach(interest => {
+        const span = document.createElement('span');
+        span.className = 'interest';
+        span.textContent = interest;
+        interestsEl.appendChild(span);
+      });
+      
+      document.getElementById('modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+    
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
